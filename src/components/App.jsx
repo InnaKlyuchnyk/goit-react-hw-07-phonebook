@@ -1,18 +1,22 @@
+import Section from './Section';
+import Form from './Form';
+import { useGetContactsQuery } from '../redux/contacts';
+
 export const App = () => {
-  console.log('Hello world');
+  const { data, error, isLoading } = useGetContactsQuery({
+    refetchOnFocus: true,
+  });
+
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        textTransform: 'uppercase',
-        color: '#010101',
-      }}
-    >
-      React homework template
+    <div>
+      <Section title="Phonebook">
+        <Form></Form>
+      </Section>
+
+      <Section title="Contacts">
+        {/* <Filter />
+        <PhonebookList /> */}
+      </Section>
     </div>
   );
 };
