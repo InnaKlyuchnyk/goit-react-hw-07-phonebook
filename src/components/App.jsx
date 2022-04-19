@@ -7,6 +7,10 @@ export const App = () => {
     refetchOnFocus: true,
   });
 
+  console.log('data', data);
+  console.log('error', error);
+  console.log('isLoading', isLoading);
+
   return (
     <div>
       <Section title="Phonebook">
