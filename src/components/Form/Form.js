@@ -1,28 +1,28 @@
 import styles from './Form.module.css';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { add } from '../../redux/contacts/reducer';
+import toast from 'react-hot-toast';
+import { useCreateContactMutation } from '../../redux/contacts';
 
-function Form() {
-  //   const dispatch = useDispatch();
-  //   const contacts = useSelector(state => state.items);
+function Form({ contacts }) {
+  const [createContact] = useCreateContactMutation();
 
   const handleSubmit = event => {
     event.preventDefault();
+
     const form = event.currentTarget;
     const name = form.elements.name.value;
-    const number = form.elements.number.value;
-    console.log('name', name);
-    console.log('number', number);
+    const phone = form.elements.number.value;
+    const newContact = { name, phone };
 
-    //   if (
-    //     !contacts.find(
-    //       contact => contact.name.toLowerCase() === name.toLowerCase()
-    //     )
-    //   ) {
-    //     dispatch(add(name, number));
-    //   } else {
-    //     alert(`${name} is already in contacts`);
-    //   }
+    if (
+      !contacts.find(
+        contact => contact.name.toLowerCase() === name.toLowerCase()
+      )
+    ) {
+      createContact(newContact);
+      toast.success('New contact is added');
+    } else {
+      toast.error(`${name} is already in contacts`);
+    }
     form.reset();
   };
 

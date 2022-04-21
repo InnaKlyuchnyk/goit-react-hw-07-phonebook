@@ -1,26 +1,22 @@
 import Section from './Section';
 import Form from './Form';
+import ContactsList from './ContactsList';
+import { Toaster } from 'react-hot-toast';
 import { useGetContactsQuery } from '../redux/contacts';
 
 export const App = () => {
-  const { data, error, isLoading } = useGetContactsQuery({
-    refetchOnFocus: true,
-  });
-
-  console.log('data', data);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
+  const { data } = useGetContactsQuery();
 
   return (
     <div>
       <Section title="Phonebook">
-        <Form></Form>
+        <Form contacts={data} />
       </Section>
 
       <Section title="Contacts">
-        {/* <Filter />
-        <PhonebookList /> */}
+        {data && <ContactsList contacts={data} />}
       </Section>
+      <Toaster />
     </div>
   );
 };
