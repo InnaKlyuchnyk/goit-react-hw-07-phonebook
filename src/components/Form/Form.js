@@ -1,9 +1,13 @@
 import styles from './Form.module.css';
 import toast from 'react-hot-toast';
-import { useCreateContactMutation } from '../../redux/contacts';
+import {
+  useCreateContactMutation,
+  useGetContactsQuery,
+} from '../../redux/contacts';
 
-function Form({ contacts }) {
+function Form() {
   const [createContact] = useCreateContactMutation();
+  const { data } = useGetContactsQuery();
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -14,9 +18,7 @@ function Form({ contacts }) {
     const newContact = { name, phone };
 
     if (
-      !contacts.find(
-        contact => contact.name.toLowerCase() === name.toLowerCase()
-      )
+      !data.find(contact => contact.name.toLowerCase() === name.toLowerCase())
     ) {
       createContact(newContact);
       toast.success('New contact is added');
